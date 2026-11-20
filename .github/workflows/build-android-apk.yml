@@ -1,6 +1,4 @@
-
 name: SmartTree Rwanda Android APK
-
 on:
   workflow_dispatch:
   push:
