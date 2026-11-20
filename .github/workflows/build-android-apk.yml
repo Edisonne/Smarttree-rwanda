@@ -1,9 +1,9 @@
-name: SmartTree Rwanda Android APK
+name: Build SmartTree Rwanda APK
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
