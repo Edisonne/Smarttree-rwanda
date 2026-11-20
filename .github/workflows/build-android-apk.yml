@@ -1,30 +1,33 @@
-name: Build SmartTree Rwanda Android APK
-on:
-workflow_dispatch:
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+name: Build Android APK
 
-      - uses: actions/setup-java@v4
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
-      - uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
-      - name: Extract project
-        run: |
-          mkdir app
-          unzip smarttree-source.zip -d app
-
-      - name: Generate Android files
-        working-directory: app
-        run: flutter create --platforms=android .
 
       - name: Install dependencies
         working-directory: app
@@ -46,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: smarttree-rwanda-android-apk
-      - path: app/build/app/outputs/flutter-apk/app-release.apk          if-no-files-found: error
+          path: app/build/app/outputs/flutter-apk/app-release.apk
           
